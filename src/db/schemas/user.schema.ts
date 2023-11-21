@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { HydratedDocument, Schema as MongooseSchema } from "mongoose";
+import { Books } from "./book.schema";
 
 
 export type UserDoc = HydratedDocument<Users>;
@@ -16,11 +17,11 @@ export class Users {
     @Prop()
     password: string;
 
-    @Prop()
-    ownbooks: [{ type: MongooseSchema.Types.ObjectId, ref: 'Books' }];
+    @Prop({ type: [{ type: MongooseSchema.Types.ObjectId, ref: 'Books' }] })
+    ownbooks: Books[];
 
-    @Prop()
-    takebooks: [{ type: MongooseSchema.Types.ObjectId, ref: 'Books' }];
+    @Prop({ type: [{ type: MongooseSchema.Types.ObjectId, ref: 'Books' }] })
+    takebooks: Books[];
 
 };
 

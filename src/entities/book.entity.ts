@@ -1,11 +1,9 @@
-import { UserDoc } from "src/db/schemas/user.schema";
+import { UserDoc } from 'src/db/schemas/user.schema';
 
-
-
-export class BookEntity{
-    title:string;
-    description:string;
-    pages:number;
-    readers:UserDoc[];
-    owner:UserDoc;
+export class BookEntity {
+  title: string;
+  description: string;
+  pages: number;
+  readers: UserDoc[];
+  owner: UserDoc;
 }

@@ -1,5 +1,3 @@
-import { UserEntity } from "src/entities/user.entity";
+import { UserEntity } from 'src/entities/user.entity';
 
-
-
-export class CreateUserDto extends UserEntity { };
+export class CreateUserDto extends UserEntity {}

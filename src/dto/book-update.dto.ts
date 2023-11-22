@@ -1,5 +1,4 @@
-import { BookEntity } from "src/entities/book.entity";
+import { PartialType } from '@nestjs/mapped-types';
+import { CreateBookDto } from './book-create.dto';
 
-
-
-export class UpdateBookDto extends BookEntity { }
+export class UpdateBookDto extends PartialType(CreateBookDto) {}

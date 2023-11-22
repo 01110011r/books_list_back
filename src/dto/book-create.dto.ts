@@ -1,5 +1,3 @@
-import { BookEntity } from "src/entities/book.entity";
+import { BookEntity } from 'src/entities/book.entity';
 
-
-
-export class CreateBookDto extends BookEntity{};
+export class CreateBookDto extends BookEntity {}

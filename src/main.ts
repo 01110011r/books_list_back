@@ -7,10 +7,10 @@ async function bootstrap() {
   app.enableCors();
   await app
     .listen(3003)
-    .then(() => {
+    .then((): void => {
       log('server is running on port 3003 ');
     })
-    .catch((err) => {
+    .catch((err): void => {
       log(err);
     });
 }

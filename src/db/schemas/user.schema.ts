@@ -22,4 +22,5 @@ export class Users {
   takebooks: Books[];
 }
 
-export const UserSchema = SchemaFactory.createForClass(Users);
+export const UserSchema: MongooseSchema<Users> =
+  SchemaFactory.createForClass(Users);

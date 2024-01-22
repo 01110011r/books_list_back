@@ -1,4 +1,4 @@
-import { Prop, Schema } from '@nestjs/mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Schema as MongooseSchema } from 'mongoose';
 import { Users } from './user.schema';
 
@@ -21,3 +21,6 @@ export class Books {
   @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'Users' })
   owner: Users;
 }
+
+export const BookSchema: MongooseSchema<Books> =
+  SchemaFactory.createForClass(Books);

@@ -14,5 +14,10 @@ export class BookService {
     const book = await new this.bookModel(createBookDto);
 
     return book.save();
+  },
+
+
+  async  GetBooks(){
+    return await this.bookModel.find().exec();
   }
 }

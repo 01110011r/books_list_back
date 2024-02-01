@@ -15,28 +15,21 @@ export class BookService {
     const book = await new this.bookModel(createBookDto);
 
     return book.save();
-  };
-
-
-  async  GetAllBooks():Promise<BookDoc[]>{
-    return await this.bookModel.find().exec();
-  };
-
-
-  async GetBook(id:string):Promise<BookDoc>{
- return this.bookModel.findById(id);
-  };
-
-
-  async UpdateBook(id:string, updateBookDto:UpdateBookDto):Promise<BookDoc>{
-    return this.bookModel.findByIdAndUpdate(id, updateBookDto);
-  };
-
-
-  async DeleteBook(id:string){
-    return this.bookModel.findByIdAndRemove(id);
   }
 
+  async GetAllBooks(): Promise<BookDoc[]> {
+    return await this.bookModel.find().exec();
+  }
 
+  async GetBook(id: string): Promise<BookDoc> {
+    return this.bookModel.findById(id);
+  }
 
+  async UpdateBook(id: string, updateBookDto: UpdateBookDto): Promise<BookDoc> {
+    return this.bookModel.findByIdAndUpdate(id, updateBookDto);
+  }
+
+  async DeleteBook(id: string) {
+    return this.bookModel.findByIdAndRemove(id);
+  }
 }

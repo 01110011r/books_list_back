@@ -9,7 +9,7 @@ import { BookModule } from './book/book.module';
   imports: [
     MongooseModule.forRoot('mongodb://localhost:27017/Books'),
     UserModule,
-    BookModule
+    BookModule,
   ],
   controllers: [AppController],
   providers: [AppService],

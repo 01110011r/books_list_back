@@ -1,5 +1,6 @@
 import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
 import { AuthService } from './auth.service';
+import { AuthDto } from '../dto/auth.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -8,5 +9,5 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   @Post('login')
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  Signin(@Body() signInDto: Record<any, any>) {}
+  Signin(@Body() signInDto: AuthDto) {}
 }

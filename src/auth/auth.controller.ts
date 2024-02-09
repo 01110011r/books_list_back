@@ -9,5 +9,7 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   @Post('login')
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  Signin(@Body() signInDto: AuthDto) {}
+  Signin(@Body() authDto: AuthDto) {
+    return this.authService.Signin(authDto);
+  }
 }

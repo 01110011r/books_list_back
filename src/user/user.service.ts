@@ -12,7 +12,7 @@ export class UserService {
   ) {}
 
   async Signup(createUserDto: CreateUserDto): Promise<UserDoc> {
-    const user = await new this.userModel(createUserDto);
+    const user = new this.userModel(createUserDto);
 
     return user.save();
   }
@@ -21,8 +21,16 @@ export class UserService {
     return this.userModel.find().exec();
   }
 
-  async Findone(id: string): Promise<UserDoc> {
-    return this.userModel.findById(id);
+  async Findone(
+    id: string | null,
+    username: string | null,
+    email: string | null,
+  ): Promise<UserDoc> {
+    return id
+      ? this.userModel.findOne({ id })
+      : username
+        ? this.userModel.findOne({ username })
+        : this.userModel.findOne({ email });
   }
 
   async Updateuser(id: string, updateUserDto: UpdateUserDto): Promise<UserDoc> {

@@ -4,6 +4,7 @@ import { Model } from 'mongoose';
 import { UserDoc, Users } from 'src/db/schemas/user.schema';
 import { CreateUserDto } from 'src/dto/user-create.dto';
 import { UpdateUserDto } from 'src/dto/user-update.dto';
+import { genSalt, hash } from 'bcrypt';
 
 @Injectable()
 export class UserService {
@@ -12,9 +13,14 @@ export class UserService {
   ) {}
 
   async Signup(createUserDto: CreateUserDto): Promise<UserDoc> {
+    createUserDto.password = await this.hashPassword(createUserDto.password);
     const user = new this.userModel(createUserDto);
-
     return user.save();
+  }
+
+  protected async hashPassword(password: string) {
+    const salt = await genSalt(4);
+    return await hash(password, salt);
   }
 
   async Findall(): Promise<UserDoc[]> {

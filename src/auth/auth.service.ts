@@ -14,18 +14,18 @@ export class AuthService {
   async Signup(
     createUserDto: CreateUserDto,
   ): Promise<{ access_token: string }> {
-    const username = await this.userService.Findone(
+    const IsUsernameUnique = await this.userService.Findone(
       null,
       createUserDto.username,
       null,
     );
-    const email = await this.userService.Findone(
+    const IsEmailUnique = await this.userService.Findone(
       null,
       null,
       createUserDto.email,
     );
-    if (username || email) {
-      console.log(username, email);
+    if (IsUsernameUnique || IsEmailUnique) {
+      console.log(IsUsernameUnique, IsEmailUnique);
       throw new UnauthorizedException();
     }
 
@@ -44,11 +44,11 @@ export class AuthService {
   async Signin(
     createUserDto: CreateUserDto,
   ): Promise<{ access_token: string }> {
-    const user: any = await this.userService.Findone(
-      null,
-      createUserDto.username,
-      null,
-    );
+    const user: any = createUserDto.username
+      ? await this.userService.Findone(null, createUserDto.username, null)
+      : createUserDto.email
+        ? await this.userService.Findone(null, null, createUserDto.email)
+        : null;
 
     if (!user) {
       throw new UnauthorizedException();

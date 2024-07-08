@@ -1,16 +1,13 @@
 import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { UserService } from './user.service';
-import { CreateUserDto } from 'src/auth/dto/user-create.dto';
 import { UpdateUserDto } from './dto/user-update.dto';
+import { ApiTags } from '@nestjs/swagger';
+import constants from 'src/config/constants';
 
-@Controller('user')
+@ApiTags('Users')
+@Controller('users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
-
-  @Post('signup')
-  signup(@Body() createUserDto: CreateUserDto) {
-    return this.userService.Signup(createUserDto);
-  }
 
   @Get()
   findall() {
@@ -23,7 +20,7 @@ export class UserController {
   }
 
   @Put(':id')
-  updateuser(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.userService.Updateuser(id, updateUserDto);
+  async updateuser(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+    return await this.userService.Updateuser(id, updateUserDto);
   }
 }

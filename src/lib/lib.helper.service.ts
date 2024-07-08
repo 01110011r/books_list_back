@@ -11,6 +11,7 @@ export class Helper {
   ): Promise<string | undefined> {
     const request = context.switchToHttp().getRequest();
     const token = this.extractTokenFromHeader(request);
+    console.log('helper ' + token)
     if (!token) {
       return undefined;
     }
@@ -21,6 +22,8 @@ export class Helper {
 
   extractTokenFromHeader(request: Request): string | undefined {
     const [type, token] = request.headers.authorization?.split(' ') ?? [];
+    console.log('helper 26 ' + request.headers.authorization)
+
     return type === 'Bearer' ? token : undefined;
   }
 }

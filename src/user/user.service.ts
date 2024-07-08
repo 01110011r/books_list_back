@@ -16,7 +16,7 @@ export class UserService {
   async Signup(createUserDto: CreateUserDto): Promise<UserDoc> {
     createUserDto.password = await this.hashPassword(createUserDto.password);
     const user = new this.userModel(createUserDto);
-    return user.save();
+    return await user.save();
   }
 
   protected async hashPassword(password: string) {

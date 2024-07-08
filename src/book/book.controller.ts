@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  Headers,
   Param,
   Post,
   Put,
@@ -13,14 +14,21 @@ import { BookService } from './book.service';
 import { CreateBookDto } from './dto/book-create.dto';
 import { UpdateBookDto } from './dto/book-update.dto';
 import { AuthGuard } from './auth.guard';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
-@Controller('book')
+@ApiTags('Books')
+@Controller('books')
+@ApiBearerAuth()
 export class BookController {
   constructor(private bookService: BookService) {}
 
   @UseGuards(AuthGuard)
   @Post()
-  CreateBook(@Body() createBookDto: CreateBookDto, @Req() user: any) {
+  CreateBook(
+    @Body() createBookDto: CreateBookDto,
+    @Req() user: any,
+    @Headers('authorization') authToken: string
+    ) {
     console.log(user)
     return {};
     return this.bookService.AddBook(createBookDto);
@@ -42,6 +50,7 @@ export class BookController {
     return this.bookService.UpdateBook(id, updateBookDto);
   }
 
+  
   @Delete('id')
   DeleteBook(@Param('id') id: string) {
     return this.bookService.DeleteBook(id);

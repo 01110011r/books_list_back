@@ -29,7 +29,7 @@ export class AuthService {
       throw new UnauthorizedException();
     }
 
-    const newUser: any = await this.userService.Signup(createUserDto);
+    const newUser = await this.userService.Signup(createUserDto);
     if (!newUser) {
       throw new HttpException('Internal server error', HttpStatus.INTERNAL_SERVER_ERROR);
     }

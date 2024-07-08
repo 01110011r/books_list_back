@@ -1,7 +1,7 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, UnauthorizedException } from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import { JwtService } from '@nestjs/jwt';
-import { CreateUserDto } from '../dto/user-create.dto';
+import { CreateUserDto } from './dto/user-create.dto';
 import { compare } from 'bcrypt';
 
 @Injectable()
@@ -31,13 +31,13 @@ export class AuthService {
 
     const newUser: any = await this.userService.Signup(createUserDto);
     if (!newUser) {
-      throw new UnauthorizedException();
+      throw new HttpException('Internal server error', HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     const payload = { id: newUser._id, username: newUser.username };
 
     return {
-      access_token: await this.jwtService.signAsync(payload),
+      access_token: await this.jwtService.sign(payload),
     };
   }
 

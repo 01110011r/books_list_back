@@ -5,10 +5,15 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { UserModule } from './user/user.module';
 import { BookModule } from './book/book.module';
 import { AuthModule } from './auth/auth.module';
+import { ConfigModule } from '@nestjs/config';
+import Constants from './config/constants';
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://localhost:27017/Books'),
+    ConfigModule.forRoot({
+      load:[Constants]
+    }),
+    MongooseModule.forRoot(Constants().db.local_db_url),
     UserModule,
     BookModule,
     AuthModule,

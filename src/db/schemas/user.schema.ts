@@ -1,25 +1,24 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Schema as MongooseSchema } from 'mongoose';
-import { Books } from './book.schema';
 
 export type UserDoc = HydratedDocument<Users>;
 
 @Schema()
 export class Users {
-  @Prop()
+  @Prop({required:true})
   username: string;
 
   @Prop()
   email: string;
 
-  @Prop()
+  @Prop({required:true})
   password: string;
 
   @Prop({ type: [{ type: MongooseSchema.Types.ObjectId, ref: 'Books' }] })
-  ownbooks: Books[];
+  ownBooks: MongooseSchema.Types.ObjectId[];
 
   @Prop({ type: [{ type: MongooseSchema.Types.ObjectId, ref: 'Books' }] })
-  takebooks: Books[];
+  takenBooks: MongooseSchema.Types.ObjectId[];
 }
 
 export const UserSchema: MongooseSchema<Users> =

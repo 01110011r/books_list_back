@@ -16,4 +16,8 @@ export class BookEntity {
 
   @ApiProperty()
   owner: UserDoc;
+
+  @ApiProperty()
+  status: ['new', 'reading', 'finished']
+
 }

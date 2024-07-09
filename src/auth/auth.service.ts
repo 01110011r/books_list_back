@@ -26,7 +26,7 @@ export class AuthService {
     );
     if (IsUsernameUnique || IsEmailUnique) {
       console.log(IsUsernameUnique, IsEmailUnique);
-      throw new UnauthorizedException();
+      throw new HttpException('Username or email already exist', HttpStatus.BAD_REQUEST);
     }
 
     const newUser = await this.userService.Signup(createUserDto);
@@ -44,7 +44,7 @@ export class AuthService {
   async Signin(
     createUserDto: CreateUserDto,
   ): Promise<{ access_token: string }> {
-    const user: any = createUserDto.username
+    const user = createUserDto.username
       ? await this.userService.Findone(null, createUserDto.username, null)
       : createUserDto.email
         ? await this.userService.Findone(null, null, createUserDto.email)
@@ -62,7 +62,7 @@ export class AuthService {
     const payload = { id: user._id, username: user.username };
 
     return {
-      access_token: await this.jwtService.signAsync(payload),
+      access_token: this.jwtService.sign(payload),
     };
   }
 }

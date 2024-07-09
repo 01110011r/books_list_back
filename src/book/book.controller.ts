@@ -15,6 +15,7 @@ import { CreateBookDto } from './dto/book-create.dto';
 import { UpdateBookDto } from './dto/book-update.dto';
 import { AuthGuard } from './auth.guard';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { Request } from 'express';
 
 @ApiTags('Books')
 @Controller('books')
@@ -26,12 +27,11 @@ export class BookController {
   @Post()
   CreateBook(
     @Body() createBookDto: CreateBookDto,
-    @Req() user: any,
-    @Headers('authorization') authToken: string
+    @Req() req: Request,
     ) {
-    console.log(user)
-    return {};
-    return this.bookService.AddBook(createBookDto);
+    // console.log('user '+ req['user'], '\n')
+
+    return this.bookService.AddBook(createBookDto, req['user']);
   }
 
   @Get()

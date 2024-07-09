@@ -2,11 +2,12 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Schema as MongooseSchema } from 'mongoose';
 import { Users } from './user.schema';
 
+
 export type BookDoc = HydratedDocument<Books>;
 
 @Schema()
 export class Books {
-  @Prop()
+  @Prop({required: true})
   title: string;
 
   @Prop()
@@ -15,11 +16,14 @@ export class Books {
   @Prop()
   pages: number;
 
-  @Prop({ type: [{ type: MongooseSchema.Types.ObjectId, ref: 'Users' }] })
-  readers: Users[];
+@Prop({type: [{type: MongooseSchema.Types.ObjectId, ref: Users.name}]})
+  readers: MongooseSchema.Types.ObjectId[];
 
-  @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'Users' })
-  owner: Users;
+  @Prop({ type: MongooseSchema.Types.ObjectId, ref: Users.name, required: true })
+  owner: MongooseSchema.Types.ObjectId;
+
+  @Prop({required:true})
+  status: ['new', 'reading', 'finished']
 }
 
 export const BookSchema: MongooseSchema<Books> =

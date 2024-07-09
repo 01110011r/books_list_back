@@ -1,11 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { BookDoc, Books } from '../db/schemas/book.schema';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { CreateBookDto } from './dto/book-create.dto';
 import { UpdateBookDto } from './dto/book-update.dto';
-import { UserService } from '../user/user.service';
 import { Helper } from '../lib/lib.helper.service';
+import { Users, UserSchema } from 'src/db/schemas/user.schema';
+
+interface Owner {
+  id: string,
+  username: string,
+}
+
 
 @Injectable()
 export class BookService {
@@ -14,16 +20,22 @@ export class BookService {
     private helper: Helper,
   ) {}
 
-  async AddBook(createBookDto: CreateBookDto): Promise<BookDoc> {
-    // const ownerId = await this.helper.extractUserIdFromToken();
-    // console.log(ownerId);
-    const book = await new this.bookModel({ ...createBookDto });
 
-    return book.save();
+  async AddBook(createBookDto: CreateBookDto, owner: Owner): Promise<BookDoc | {}> {
+    const ownerId = new Types.ObjectId(owner.id);
+    const book = new this.bookModel({ ...createBookDto, owner:ownerId });
+  
+    return await book.save();
   }
 
   async GetAllBooks(): Promise<BookDoc[]> {
-    return await this.bookModel.find().exec();
+    return await this.bookModel
+    .find()
+    .populate([
+      { path: 'owner', select: '-password' },
+      { path: 'readers', select: '-password' }
+    ])
+    .exec();
   }
 
   async GetBook(id: string): Promise<BookDoc> {

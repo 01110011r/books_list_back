@@ -21,9 +21,9 @@ export class Helper {
   }
 
   extractTokenFromHeader(request: Request): string | undefined {
+   
     const [type, token] = request.headers.authorization?.split(' ') ?? [];
     console.log('helper 26 ' + request.headers.authorization)
-
     return type === 'Bearer' ? token : undefined;
   }
 }

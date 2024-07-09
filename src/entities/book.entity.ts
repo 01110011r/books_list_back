@@ -12,7 +12,7 @@ export class BookEntity {
   pages: number;
 
   @ApiProperty()
-  readers: UserDoc[];
+  writer: string;
 
   @ApiProperty()
   owner: UserDoc;

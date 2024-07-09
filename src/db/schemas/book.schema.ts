@@ -16,8 +16,8 @@ export class Books {
   @Prop()
   pages: number;
 
-@Prop({type: [{type: MongooseSchema.Types.ObjectId, ref: Users.name}]})
-  readers: MongooseSchema.Types.ObjectId[];
+  @Prop({ type: String, required: true })
+  writer: string;
 
   @Prop({ type: MongooseSchema.Types.ObjectId, ref: Users.name, required: true })
   owner: MongooseSchema.Types.ObjectId;
